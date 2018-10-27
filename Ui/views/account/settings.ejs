@@ -1,0 +1,106 @@
+<% layout('/shared/_layout') -%>
+
+<div class="row">
+  <div class="col-md-5 order-md-2 mb-5">
+    <h4 class="d-flex justify-content-between align-items-center mb-3">
+      <span class="text-muted">Social Media Accounts</span>
+    </h4>
+
+    <form class="card p-2 mb-3"  action="/user/account/AddSocialMedia/" method="post">
+      <div class="input-group">
+        <select class="form-control social-media-dropdown" name="socialMediaType">
+          <% SOCIAL_MEDIA_TYPES.forEach(function(social) { %>
+          <option value="<%= social.type %>"><%= social.name %></option>
+          <% }); %>
+        </select>
+        <input type="text" class="form-control" name="socialMediaNick" placeholder="Nick">
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </div>
+    </form>
+
+    <% if(user.socialMedia.length !== 0){%>
+    <ul class="list-group mb-3">
+      <% user.socialMedia.forEach(function(social) { %>
+      <% var mediaType = SOCIAL_MEDIA_TYPES.find(x => x.type === social.social_media_type)%>
+      <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <div>
+          <a target="_blank" href="<%= mediaType.prefix + social.nick%>">
+            <h6 class="my-2"><i class="<%= mediaType.icon %>"></i>
+              <%= social.nick %>
+            </h6>
+          </a>
+        </div>
+        <span class="text-muted">
+          <a href="removeSocialMedia/<%= social.id %>" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></a>
+        </span>
+      </li>
+      <% }); %>
+    </ul>
+    <% } else { %>
+    <div class="text-center">Add your social media account</div>
+    <%} %>
+
+  </div>
+  <div class="col-md-7 order-md-1">
+    <h4 class="mb-3">Settings</h4>
+    <form class="needs-validation" id="settingsForm" novalidate="" action="/user/account/updateSettings/" method="post">
+      <div class="mb-3">
+        <label for="username">Username </label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">@</span>
+          </div>
+          <input type="text" class="form-control" id="username" placeholder="Username" value="<%= user.username %>"
+            disabled>
+          <div class="invalid-feedback" style="width: 100%;">
+            Your username is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" value="<%= user.email %>" disabled>
+        <div class="invalid-feedback">
+          Please enter a valid email address for shipping updates.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="address">Profession <span class="text-muted">(Optional)</span></label>
+        <input type="text" class="form-control" name="profession" id="address" required="" value="<%= user.profession != null ? user.profession :'' %>">
+        <div class="invalid-feedback">
+          Please enter your shipping address.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="address2">Bio <span class="text-muted">(Optional)</span></label>
+        <input type="text" class="form-control" name="bio" id="address2" value="<%= user.bio != null ? user.bio :'' %>">
+      </div>
+
+
+      <div class="mb-3">
+        <label for="newPassword">New password</label>
+        <input type="password" class="form-control" id="newPassword" placeholder="" name="newPassword">
+      </div>
+
+      <div class="mb-3">
+        <label for="newPasswordAgain">New password agein</label>
+        <input type="password" class="form-control" id="newPasswordAgain" placeholder="" name="newPasswordAgain">
+      </div>
+
+      <div class="mb-3">
+        <label for="currentPassword"><strong>Current password (Required)</strong></label>
+        <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="" required="">
+        <div class="invalid-feedback">
+          Please enter your password
+        </div>
+      </div>
+      <hr class="mb-4">
+      <a class="btn btn-primary btn-lg btn-block" style="color:#fff" onclick="validateForm()">Update</a>
+    </form>
+  </div>
+</div>

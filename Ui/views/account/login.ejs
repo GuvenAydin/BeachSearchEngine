@@ -1,0 +1,19 @@
+<% layout('/shared/_layout') -%>
+
+<div class="container text-center">
+  <form method="post" class="form-signin" autocomplete="off">
+    <h1 class="h3 mb-3 font-weight-normal">Please login</h1>
+    <% if(message){ %>
+    <div class="alert <% if(code == 200){%> alert-success<%}else{%>alert-danger <%} %>" role="alert">
+      <%= message %>
+    </div>
+    <% } %>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="text" name="usernameOrEmail" id="usernameOrEmail" class="form-control" placeholder="Nick or email"
+      required="" autofocus="" autocomplete="false">
+    <label for="usernameOrEmail" class="sr-only">ick or email</label>
+    <input type="password" name="upass" id="inputPassword" class="form-control" placeholder="Password" required=""
+      autocomplete="false">
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+  </form>
+</div>
