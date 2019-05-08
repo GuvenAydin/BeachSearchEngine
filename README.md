@@ -48,9 +48,6 @@
    <li>
     Reset user password
   </li>
-   <li>
-  Mobile Application with React
-  </li>
 </ul>
 
 
