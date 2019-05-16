@@ -4,7 +4,7 @@ var router = express.Router()
 const request = require('request');
 
 
-router.post("/", function (req, res) {
+router.get("/", function (req, res) {
 
     const options = {
         method: 'POST',
@@ -19,19 +19,19 @@ router.post("/", function (req, res) {
         if (error) {
             return console.error('post failed:', error);
         }
+
         console.log(body.beaches)
         
         if (body.code == 200) {
-            res.render('./account/settings', { user: body.beaches });
+            res.render('./home/beach', { beach: body.beaches });
         }
         else if (body.code == 400) {
             res.render('./shared/404', { message: body.message, code: 400 });
         }
     })
 
+
 })
 
 
-
 module.exports = router
-

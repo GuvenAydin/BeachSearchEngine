@@ -3,6 +3,8 @@ var cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser');
 const engine = require('ejs-locals');
 const session = require('express-session')
+const request = require('request');
+
 const app = express()
 app.use(cookieParser())
 global.API_URL = "http://127.0.0.1:3333/v1";
@@ -52,7 +54,30 @@ app.use("/beach", require("./routes/beach.js"));
 
 
 app.get('/', function (req, res) {
-  res.render('index');
+   const options = {
+        method: 'POST',
+        uri: API_URL + '/beach/getAll',
+        body: {
+            page: 0,
+        },
+        json: true
+    }
+
+    request(options, function (error, response, body) {
+        if (error) {
+            return console.error('post failed:', error);
+        }
+
+        console.log(body.beaches)
+        
+        if (body.code == 200) {
+            res.render('./home/beach', { beach: body.beaches });
+        }
+        else if (body.code == 400) {
+            res.render('./shared/404', { message: body.message, code: 400 });
+        }
+    })
+
 })
 
 
