@@ -1,12 +1,11 @@
 <% layout('/shared/_layout') -%>
 
-
 <section class="jumbotron text-center" style="background:none;">
   <div class="container">
    <div class="container h-100">
       <div class="d-flex justify-content-center h-100">
         <div class="searchbar">
-          <input class="search_input" type="text" name="" placeholder="Search...">
+          <input class="search_input" id="search_query" type="text" name="" placeholder="Search...">
           <a href="#" class="search_icon">Go</a>
         </div>
       </div>
@@ -20,15 +19,6 @@
     <div class="col-md-12 gedf-main">
       
     <% beach.forEach(function(beach) { %>
-                      
-      <a href="#">
-        
-       
-         </a>
-      
-                       
-
-
       <!--- \\\\\\\Post-->
       <div class="card gedf-card">
         <div class="card-header">

@@ -58,7 +58,7 @@ app.get('/', function (req, res) {
         method: 'POST',
         uri: API_URL + '/beach/getAll',
         body: {
-            page: 0,
+            page: 1,
         },
         json: true
     }

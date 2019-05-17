@@ -4,7 +4,9 @@ var db = require('./db')
 
 router.post("/getAll", function (req, res) {
     
-    var page = (BEACH_LIST_PAGE_SIZE * req.body.page) ;
+	var page = (BEACH_LIST_PAGE_SIZE * req.body.page);
+	
+	console.log("page " + req.body.page)
 
 	db.query("SELECT * FROM beaches LIMIT ? OFFSET ?", [BEACH_LIST_PAGE_SIZE,page], function (err, result) {
     

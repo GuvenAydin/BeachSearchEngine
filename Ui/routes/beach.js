@@ -4,7 +4,7 @@ var router = express.Router()
 const request = require('request');
 
 
-router.get("/", function (req, res) {
+router.get("/search", function (req, res) {
 
     const options = {
         method: 'POST',
@@ -32,6 +32,5 @@ router.get("/", function (req, res) {
 
 
 })
-
 
 module.exports = router
