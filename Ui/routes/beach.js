@@ -6,9 +6,12 @@ const request = require('request');
 
 router.get("/", function (req, res) {
 
-    console.log(req.query.pageIndex)
-
+    var searchString = "";
     var page = 0; 
+
+    if(req.query.searchString !== "" && req.query.searchString){
+        searchString = req.query.searchString;
+    }
 
     if(req.query.pageIndex && req.query.pageIndex != 0){
         page = req.query.pageIndex;
@@ -18,6 +21,7 @@ router.get("/", function (req, res) {
         uri: API_URL + '/beach/getBeaches',
         body: {
             pageIndex: page,   
+            searchString: searchString,   
         },
         json: true
     }
@@ -30,12 +34,12 @@ router.get("/", function (req, res) {
         
         if (body.code == 200) {
 
-            if(page == 0){
+            if(page == 0 && searchString == ""){
                 res.render('./home/beach', { beach: body.beaches });
             }else{
                 res.render('./shared/_beaches', { beach: body.beaches});
             }   
-            
+
         }
         else if (body.code == 400) {
             res.render('./shared/404', { message: body.message, code: 400 });
