@@ -40,13 +40,10 @@
     Beach insert page
   </li>
    <li>
-    Search engine
-  </li>
-     <li>
-   Email integration
+      <del>Search engine</del>
   </li>
    <li>
-    Reset user password
+     User login with <a href="http://www.passportjs.org/">passaport.js</a>
   </li>
 </ul>
 
