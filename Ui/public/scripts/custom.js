@@ -1,6 +1,6 @@
-var CONTENT_LOADER_DISABLED = false,
-PAGE_INDEX = 1,
-LOADING_CONTENT =false;
+var CONTENT_LOADER_DISABLED = false;
+var PAGE_INDEX = 1;
+var LOADING_CONTENT = false;
 
 
 function validateForm() {
@@ -35,7 +35,6 @@ function nearToBottom() {
 }
 
 function setContentLoader() {
-
     if (nearToBottom() === false) {
         return;
     }
@@ -44,32 +43,24 @@ function setContentLoader() {
         return;
     }
     LOADING_CONTENT = true;
-    PAGE_INDEX++;
     console.log("getting more contents");
+    
     $.ajax({
-        contentType: 'application/json',
+        contentType: 'application/json;',
         data: {
-            "page": PAGE_INDEX
-        },
-        dataType: 'json',
-        success: function(data){
-            console.log("device control succeeded");
-        },
-        error: function(){
-            console.log("Device control failed");
+            "pageIndex": PAGE_INDEX
         },
         type: "GET",
-        url: "beach/search"
+        url: "/"
     }).done(function (result) {
         if (!result.trim()) {
             CONTENT_LOADER_DISABLED = true;
             return;
         }
-
         LOADING_CONTENT = false;
 
-        // insert new content
-        $(".bobi-feed-monte").last().after(result);
+        PAGE_INDEX = PAGE_INDEX + 1;
 
+        $(".beach-feed-content").last().after(result);
     });
 }

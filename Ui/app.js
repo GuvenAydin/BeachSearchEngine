@@ -17,8 +17,6 @@ global.SOCIAL_MEDIA_TYPES = [
   {type:4,name:"LinkedIn",prefix:"https://www.linkedin.com/in/",icon: "fa fa-linkedin"},
 ];
 
-
-
 app.set('trust proxy', 1)
 app.use(session({
   key: 'user_sid',
@@ -38,49 +36,15 @@ app.use((req, res, next) => {
   next();
 });
 
-
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }))
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 
-
-
 app.use("/home", require("./routes/home.js"));
 app.use("/auth", require("./routes/auth.js"));
 app.use("/user", require("./routes/user.js"));
-app.use("/beach", require("./routes/beach.js"));
-
-
-
-app.get('/', function (req, res) {
-   const options = {
-        method: 'POST',
-        uri: API_URL + '/beach/getAll',
-        body: {
-            page: 1,
-        },
-        json: true
-    }
-
-    request(options, function (error, response, body) {
-        if (error) {
-            return console.error('post failed:', error);
-        }
-
-        console.log(body.beaches)
-        
-        if (body.code == 200) {
-            res.render('./home/beach', { beach: body.beaches });
-        }
-        else if (body.code == 400) {
-            res.render('./shared/404', { message: body.message, code: 400 });
-        }
-    })
-
-})
-
-
+app.use("/", require("./routes/beach.js"));
 
 
 app.listen(3000, function () {

@@ -4,33 +4,43 @@ var router = express.Router()
 const request = require('request');
 
 
-router.get("/search", function (req, res) {
+router.get("/", function (req, res) {
 
+    console.log(req.query.pageIndex)
+
+    var page = 0; 
+
+    if(req.query.pageIndex && req.query.pageIndex != 0){
+        page = req.query.pageIndex;
+    }
     const options = {
         method: 'POST',
-        uri: API_URL + '/beach/getAll',
+        uri: API_URL + '/beach/getBeaches',
         body: {
-            page: 0,
+            pageIndex: page,   
         },
         json: true
     }
 
     request(options, function (error, response, body) {
+
         if (error) {
             return console.error('post failed:', error);
         }
-
-        console.log(body.beaches)
         
         if (body.code == 200) {
-            res.render('./home/beach', { beach: body.beaches });
+
+            if(page == 0){
+                res.render('./home/beach', { beach: body.beaches });
+            }else{
+                res.render('./shared/_beaches', { beach: body.beaches});
+            }   
+            
         }
         else if (body.code == 400) {
             res.render('./shared/404', { message: body.message, code: 400 });
         }
     })
-
-
 })
 
 module.exports = router
